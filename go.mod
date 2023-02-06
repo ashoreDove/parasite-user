@@ -1,4 +1,4 @@
-module github.com/ashoreDove/parasite/user
+module github.com/ashoreDove/parasite-user
 
 go 1.18
 
