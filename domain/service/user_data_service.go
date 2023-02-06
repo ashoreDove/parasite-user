@@ -2,8 +2,8 @@ package service
 
 import (
 	"errors"
-	"github.com/ashoreDove/parasite/user/domain/model"
-	"github.com/ashoreDove/parasite/user/domain/repository"
+	"github.com/ashoreDove/parasite-user/domain/model"
+	"github.com/ashoreDove/parasite-user/domain/repository"
 	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"
 )

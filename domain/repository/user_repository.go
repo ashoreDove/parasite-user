@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/ashoreDove/parasite/user/domain/model"
+	"github.com/ashoreDove/parasite-user/domain/model"
 	"github.com/jinzhu/gorm"
 )
 

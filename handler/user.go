@@ -3,9 +3,9 @@ package handler
 import (
 	"context"
 	"github.com/ashoreDove/common"
-	"github.com/ashoreDove/parasite/user/domain/model"
-	"github.com/ashoreDove/parasite/user/domain/service"
-	user "github.com/ashoreDove/parasite/user/proto/user"
+	"github.com/ashoreDove/parasite-user/domain/model"
+	"github.com/ashoreDove/parasite-user/domain/service"
+	user "github.com/ashoreDove/parasite-user/proto/user"
 	"github.com/jinzhu/gorm"
 )
 

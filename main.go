@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/ashoreDove/common"
-	"github.com/ashoreDove/parasite/user/handler"
-	user "github.com/ashoreDove/parasite/user/proto/user"
+	"github.com/ashoreDove/parasite-user/handler"
+	user "github.com/ashoreDove/parasite-user/proto/user"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/micro/go-micro/v2"
 	log "github.com/micro/go-micro/v2/logger"
