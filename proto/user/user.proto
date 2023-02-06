@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package go.micro.service.user;
+
+service User {
+	//注册
+	rpc Register(RegisterRequest) returns (Response) {}
+	//登录
+	rpc Login(LoginRequest) returns (LoginResponse) {}
+	//手机验证码发送
+	rpc SendMessage(MessageRequest) returns (MessageResponse) {}
+}
+message MessageRequest{}
+message MessageResponse{
+	string code =1;
+}
+
+
+message RegisterRequest {
+	string account =1;
+	string nickname =2;
+	string password =3;
+	string code =4;
+}
+
+message LoginRequest {
+	string account =1;
+	string password =3;
+	string code =4;
+}
+
+message Response{
+	string msg =1;
+}
+
+message LoginResponse{
+	string msg =1;
+	string token =2;
+}
