@@ -11,7 +11,7 @@ import (
 
 type IUserService interface {
 	//注册
-	Register(context.Context, *user.RegisterRequest, *user.Response) error
+	Register(context.Context, *user.RegisterRequest, *user.RegisterResponse) error
 	//登录
 	Login(context.Context, *user.LoginRequest, *user.LoginResponse) error
 	//验证码的短信发送
@@ -28,7 +28,7 @@ func (u User) SendMessage(ctx context.Context, request *user.MessageRequest, res
 	panic("implement me")
 }
 
-func (u User) Register(ctx context.Context, req *user.RegisterRequest, resp *user.Response) error {
+func (u User) Register(ctx context.Context, req *user.RegisterRequest, resp *user.RegisterResponse) error {
 	//TODO 手机验证码校验
 
 	newUser := &model.User{
@@ -39,15 +39,17 @@ func (u User) Register(ctx context.Context, req *user.RegisterRequest, resp *use
 	_, err := u.UserDataService.AddUser(newUser)
 	if err != nil {
 		resp.Msg = "Failed"
+		resp.IsSuccess = false
 		return err
 	}
 	resp.Msg = "Successfully"
+	resp.IsSuccess = true
 	return nil
 }
 
 func (u User) Login(ctx context.Context, req *user.LoginRequest, resp *user.LoginResponse) error {
 	//TODO 手机验证码校验
-	isOk, err := u.UserDataService.CheckPassword(req.Account, req.Password)
+	isOk, name, err := u.UserDataService.CheckPassword(req.Account, req.Password)
 	if isOk {
 		resp.Msg = "Successfully"
 		//token
@@ -56,9 +58,12 @@ func (u User) Login(ctx context.Context, req *user.LoginRequest, resp *user.Logi
 			resp.Msg = "Token Create Failed"
 			return err
 		}
+		resp.IsSuccess = true
+		resp.Nickname = name
 		resp.Token = token
 	}
 	resp.Msg = "Failed"
+	resp.IsSuccess = false
 	if err != nil {
 		return err
 	}

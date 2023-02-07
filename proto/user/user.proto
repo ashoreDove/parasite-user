@@ -4,7 +4,7 @@ package go.micro.service.user;
 
 service User {
 	//注册
-	rpc Register(RegisterRequest) returns (Response) {}
+	rpc Register(RegisterRequest) returns (RegisterResponse) {}
 	//登录
 	rpc Login(LoginRequest) returns (LoginResponse) {}
 	//手机验证码发送
@@ -29,11 +29,14 @@ message LoginRequest {
 	string code =4;
 }
 
-message Response{
+message RegisterResponse{
 	string msg =1;
+	bool is_success =2;
 }
 
 message LoginResponse{
 	string msg =1;
-	string token =2;
+	bool is_success =2;
+	string token =3;
+	string nickname =4;
 }

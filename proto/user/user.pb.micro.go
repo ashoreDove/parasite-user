@@ -43,7 +43,7 @@ func NewUserEndpoints() []*api.Endpoint {
 
 type UserService interface {
 	//注册
-	Register(ctx context.Context, in *RegisterRequest, opts ...client.CallOption) (*Response, error)
+	Register(ctx context.Context, in *RegisterRequest, opts ...client.CallOption) (*RegisterResponse, error)
 	//登录
 	Login(ctx context.Context, in *LoginRequest, opts ...client.CallOption) (*LoginResponse, error)
 	//手机验证码发送
@@ -62,9 +62,9 @@ func NewUserService(name string, c client.Client) UserService {
 	}
 }
 
-func (c *userService) Register(ctx context.Context, in *RegisterRequest, opts ...client.CallOption) (*Response, error) {
+func (c *userService) Register(ctx context.Context, in *RegisterRequest, opts ...client.CallOption) (*RegisterResponse, error) {
 	req := c.c.NewRequest(c.name, "User.Register", in)
-	out := new(Response)
+	out := new(RegisterResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -96,7 +96,7 @@ func (c *userService) SendMessage(ctx context.Context, in *MessageRequest, opts 
 
 type UserHandler interface {
 	//注册
-	Register(context.Context, *RegisterRequest, *Response) error
+	Register(context.Context, *RegisterRequest, *RegisterResponse) error
 	//登录
 	Login(context.Context, *LoginRequest, *LoginResponse) error
 	//手机验证码发送
@@ -105,7 +105,7 @@ type UserHandler interface {
 
 func RegisterUserHandler(s server.Server, hdlr UserHandler, opts ...server.HandlerOption) error {
 	type user interface {
-		Register(ctx context.Context, in *RegisterRequest, out *Response) error
+		Register(ctx context.Context, in *RegisterRequest, out *RegisterResponse) error
 		Login(ctx context.Context, in *LoginRequest, out *LoginResponse) error
 		SendMessage(ctx context.Context, in *MessageRequest, out *MessageResponse) error
 	}
@@ -120,7 +120,7 @@ type userHandler struct {
 	UserHandler
 }
 
-func (h *userHandler) Register(ctx context.Context, in *RegisterRequest, out *Response) error {
+func (h *userHandler) Register(ctx context.Context, in *RegisterRequest, out *RegisterResponse) error {
 	return h.UserHandler.Register(ctx, in, out)
 }
 

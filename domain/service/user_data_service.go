@@ -1,9 +1,9 @@
 package service
 
 import (
-	"errors"
 	"github.com/ashoreDove/parasite-user/domain/model"
 	"github.com/ashoreDove/parasite-user/domain/repository"
+	"github.com/ashoreDove/parasite-user/errors"
 	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -14,7 +14,7 @@ type IUserDataService interface {
 	UpdateUser(*model.User) error
 	findUserByAccount(string) (*model.User, error)
 	FindAllUser() ([]model.User, error)
-	CheckPassword(string, string) (bool, error)
+	CheckPassword(string, string) (bool, string, error)
 	generate(string) ([]byte, error)
 	validate(string, string) (bool, error)
 }
@@ -28,12 +28,13 @@ type UserDataService struct {
 	UserRepository repository.IUserRepository
 }
 
-func (u *UserDataService) CheckPassword(account string, pwd string) (bool, error) {
+func (u *UserDataService) CheckPassword(account string, pwd string) (bool, string, error) {
 	user, err := u.findUserByAccount(account)
 	if err != nil {
-		return false, err
+		return false, user.Name, errors.UserNoExistErr
 	}
-	return u.validate(pwd, user.Password)
+	isOk, err := u.validate(pwd, user.Password)
+	return isOk, user.Name, err
 }
 
 func (u *UserDataService) generate(pwd string) ([]byte, error) {
@@ -42,7 +43,7 @@ func (u *UserDataService) generate(pwd string) ([]byte, error) {
 
 func (u *UserDataService) validate(pwd string, hashed string) (bool, error) {
 	if err := bcrypt.CompareHashAndPassword([]byte(hashed), []byte(pwd)); err != nil {
-		return false, errors.New("密码错误")
+		return false, errors.PwdErr
 	}
 	return true, nil
 }
@@ -58,7 +59,11 @@ func (u *UserDataService) AddUser(user *model.User) (string, error) {
 		return user.Account, err
 	}
 	user.Password = string(pwdByte)
-	return u.UserRepository.CreateUser(user)
+	account, err := u.UserRepository.CreateUser(user)
+	if err != nil {
+		return account, errors.UserExistErr
+	}
+	return account, nil
 }
 
 //更新
