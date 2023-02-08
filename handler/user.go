@@ -38,11 +38,11 @@ func (u User) Register(ctx context.Context, req *user.RegisterRequest, resp *use
 	}
 	_, err := u.UserDataService.AddUser(newUser)
 	if err != nil {
-		resp.Msg = "Failed"
+		resp.Msg = "注册失败"
 		resp.IsSuccess = false
 		return err
 	}
-	resp.Msg = "Successfully"
+	resp.Msg = "注册成功"
 	resp.IsSuccess = true
 	return nil
 }
@@ -51,19 +51,20 @@ func (u User) Login(ctx context.Context, req *user.LoginRequest, resp *user.Logi
 	//TODO 手机验证码校验
 	isOk, name, err := u.UserDataService.CheckPassword(req.Account, req.Password)
 	if isOk {
-		resp.Msg = "Successfully"
+		resp.Msg = "登录成功"
 		//token
 		token, err := common.GenerateToken(req.Account, req.Password)
 		if err != nil {
-			resp.Msg = "Token Create Failed"
+			resp.Msg = "Token生成失败"
 			return err
 		}
 		resp.IsSuccess = true
 		resp.Nickname = name
 		resp.Token = token
+	} else {
+		resp.Msg = "密码错误"
+		resp.IsSuccess = false
 	}
-	resp.Msg = "Failed"
-	resp.IsSuccess = false
 	if err != nil {
 		return err
 	}
