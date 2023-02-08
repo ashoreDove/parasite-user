@@ -3,7 +3,7 @@ module github.com/ashoreDove/parasite-user
 go 1.18
 
 require (
-	github.com/ashoreDove/common v0.0.0-20230206092438-e0fffd3c2981
+	github.com/ashoreDove/common v0.0.0-20230207134049-792705a7bafe
 	github.com/golang/protobuf v1.5.2
 	github.com/jinzhu/gorm v1.9.16
 	github.com/micro/go-micro/v2 v2.9.1
