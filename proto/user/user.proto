@@ -37,6 +37,6 @@ message RegisterResponse{
 message LoginResponse{
 	string msg =1;
 	bool is_success =2;
-	string token =3;
+	string token =3; //废弃
 	string nickname =4;
 }

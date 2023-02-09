@@ -2,7 +2,6 @@ package handler
 
 import (
 	"context"
-	"github.com/ashoreDove/common"
 	"github.com/ashoreDove/parasite-user/domain/model"
 	"github.com/ashoreDove/parasite-user/domain/service"
 	user "github.com/ashoreDove/parasite-user/proto/user"
@@ -53,14 +52,14 @@ func (u User) Login(ctx context.Context, req *user.LoginRequest, resp *user.Logi
 	if isOk {
 		resp.Msg = "登录成功"
 		//token
-		token, err := common.GenerateToken(req.Account, req.Password)
-		if err != nil {
-			resp.Msg = "Token生成失败"
-			return err
-		}
+		//token, err := common.GenerateToken(req.Account, req.Password)
+		//if err != nil {
+		//	resp.Msg = "Token生成失败"
+		//	return err
+		//}
 		resp.IsSuccess = true
 		resp.Nickname = name
-		resp.Token = token
+		//resp.Token = token
 	} else {
 		resp.Msg = "密码错误"
 		resp.IsSuccess = false
