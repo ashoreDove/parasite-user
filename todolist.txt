@@ -9,7 +9,7 @@
   "port":3306
 }
 {
-  "host":"172.19.80.1",
+  "host":"192.168.0.106",
   "user":"anonymous",
   "pwd":"anonymous",
   "port":21
