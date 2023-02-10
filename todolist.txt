@@ -8,6 +8,11 @@
   "database":"music",
   "port":3306
 }
-
+{
+  "host":"172.19.80.1",
+  "user":"anonymous",
+  "pwd":"anonymous",
+  "port":21
+}
 docker run --rm -v /D/Works/JetBrains/GoProject/github.com/ashoreDove/parasite/user/proto/user:/D/Works/JetBrains/GoProject/github.com/ashoreDove/parasite/user/proto/user -w /D/Works/JetBrains/GoProject/github.com/ashoreDove/parasite/user/proto/user -e ICODE=0D23CF3A7AB3ED75 cap1573/cap-protoc -I /D/Works/JetBrains/GoProject/github.com/ashoreDove/parasite/user/proto/user --go_out=/D/Works/JetBrains/GoProject/github.com/ashoreDove/parasite/user/proto/user /D/Works/JetBrains/GoProject/github.com/ashoreDove/parasite/user/proto/user/user.proto --micro_out=/D/Works/JetBrains/GoProject/github.com/ashoreDove/parasite/user/proto/user
 
